@@ -29,6 +29,12 @@ public class ProdutoStepDefinitions {
         options.addArguments("--disable-notifications");
         options.addArguments("--remote-allow-origins=*");
 
+        if (System.getenv("CI") != null) {
+            options.addArguments("--headless=new"); // Roda invisível
+            options.addArguments("--no-sandbox"); // Ignora travas de segurança do Linux
+            options.addArguments("--disable-dev-shm-usage"); // Evita travamento por falta de memória
+        }
+
         driver = new ChromeDriver(options);
         homePage = new HomePage(driver);
         produtoPage = new ProdutoPage(driver);
