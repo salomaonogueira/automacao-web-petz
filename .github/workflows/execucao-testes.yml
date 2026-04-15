@@ -18,8 +18,8 @@ jobs:
       - name: 2. Configurar o Java (JDK)
         uses: actions/setup-java@v4
         with:
-          java-version: '21' # O GitHub Actions tem suporte nativo mais estável na versão 21/LTS
-          distribution: 'temurin'
+          java-version: '24'
+          distribution: 'oracle'
           cache: maven
 
       - name: 3. Baixar dependências e Executar os Testes
