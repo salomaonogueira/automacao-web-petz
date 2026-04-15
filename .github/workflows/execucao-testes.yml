@@ -1,0 +1,33 @@
+name: Execução de Testes Automatizados (UI)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Clonar o repositório
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar o Java (JDK)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21' # O GitHub Actions tem suporte nativo mais estável na versão 21/LTS
+          distribution: 'temurin'
+          cache: maven
+
+      - name: 3. Baixar dependências e Executar os Testes
+        run: mvn clean test
+
+      - name: 4. Salvar Relatório de Testes (Evidência)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Relatorio-Cucumber-HTML
+          path: target/relatorio-teste.html
